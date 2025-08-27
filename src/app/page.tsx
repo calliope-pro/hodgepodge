@@ -1,103 +1,102 @@
-import Image from "next/image";
+import { getAllPosts } from "@/lib/posts"
+import Link from "next/link"
+import { Clock, ArrowRight } from "lucide-react"
+import { NeuCard, NeuButton, NeuTag, NeuContainer } from "@/components/ui"
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const posts = getAllPosts().slice(0, 6)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <div className="py-12">
+      {/* Hero Section */}
+      <section className="mb-24 text-center relative">
+        <NeuContainer variant="hero" size="xl" className="text-center">
+          <h1 className="mb-8 text-6xl md:text-8xl font-bold leading-tight text-foreground tracking-tight">
+            Welcome to <span className="text-accent font-extrabold">Hodgepodge</span>
+          </h1>
+          <p className="mx-auto max-w-4xl text-xl md:text-2xl leading-relaxed text-muted-foreground font-light">
+            技術記事から日常の気づきまで、様々なトピックを気軽に投稿するブログサイト。
+            <br className="hidden md:block" />
+            <span className="text-accent font-medium">寄せ集めの知識と体験</span>をお届けします。
+          </p>
+        </NeuContainer>
+      </section>
+
+      {/* Latest Posts Section */}
+      <section className="mb-20">
+        <div className="mb-12 flex items-center justify-between">
+          <h2 className="text-4xl font-bold text-foreground">最新の記事</h2>
+          <Link href="/blogs">
+            <NeuButton variant="primary" size="lg" className="group flex items-center gap-3">
+              記事一覧を見る
+              <ArrowRight className="h-5 w-5 transition-all duration-300 group-hover:translate-x-2 group-hover:scale-110" />
+            </NeuButton>
+          </Link>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+
+        {posts.length > 0 ? (
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post) => (
+              <NeuCard
+                key={post.slug}
+                variant="subtle"
+                size="lg"
+                gradient="earth"
+                className="group"
+              >
+                <div className="mb-4 flex flex-wrap gap-2">
+                  {post.tags.map((tag) => (
+                    <NeuTag key={tag} href={`/tags/${tag}`} variant="sage" size="sm">
+                      {tag}
+                    </NeuTag>
+                  ))}
+                </div>
+                <h3 className="mb-3 text-xl font-semibold text-card-foreground">
+                  <Link
+                    href={`/blogs/${post.slug}`}
+                    className="transition-colors hover:text-accent"
+                  >
+                    {post.title}
+                  </Link>
+                </h3>
+                <p className="mb-4 text-muted-foreground line-clamp-3 leading-relaxed">
+                  {post.description}
+                </p>
+                <div className="flex items-center justify-between text-sm text-muted-foreground">
+                  <time dateTime={post.datePublished}>
+                    {new Date(post.datePublished).toLocaleDateString("ja-JP")}
+                  </time>
+                  <span className="flex items-center gap-1 text-muted-foreground">
+                    <Clock className="h-4 w-4" />
+                    {post.readingTime}分
+                  </span>
+                </div>
+              </NeuCard>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16">
+            <p className="text-muted-foreground text-lg">まだ記事がありません。</p>
+          </div>
+        )}
+      </section>
+
+      {/* About Section */}
+      <section className="text-center">
+        <NeuContainer
+          variant="card"
+          size="xl"
+          className="mx-auto max-w-5xl gradient-earth text-center"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          <h2 className="mb-8 text-4xl font-bold text-stone-foreground">About</h2>
+          <p className="text-xl leading-relaxed text-stone-foreground/80 font-light max-w-3xl mx-auto">
+            <span className="font-semibold text-stone-foreground">Hodgepodge</span>
+            は、Next.js、TypeScript、MDXを使って構築された
+            <br className="hidden md:block" />
+            現代的なブログシステムです。アクセシビリティ、SEO、パフォーマンスを重視して設計。
+          </p>
+        </NeuContainer>
+      </section>
     </div>
-  );
+  )
 }

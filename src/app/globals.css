@@ -1,26 +1,274 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Sophisticated Minimalism - Dusty Earth Palette */
+  --background: #f7f5f3;
+  --foreground: #2d2a26;
+  --muted: #ede8e3;
+  --muted-foreground: #6b635c;
+  --card: #fefdfb;
+  --card-foreground: #2d2a26;
+  --border: #e6ddd4;
+  --accent: #d8a8bb;
+  --accent-foreground: #4a2c2c;
+  --accent-light: #f5e8e8;
+  --accent-dark: #b8888b;
+  --secondary: #e8e2dc;
+  --secondary-foreground: #5c5650;
+  --tertiary: #c4a484;
+  --tertiary-foreground: #4a3c2a;
+  --sage: #9caf88;
+  --sage-foreground: #3d4a2f;
+  --sage-light: #e8f0e1;
+  --lavender: #b8a9c9;
+  --lavender-foreground: #3d2e4a;
+  --lavender-light: #e8e1f0;
+  --stone: #b8b5a7;
+  --stone-foreground: #3d3c36;
+  --success: #9caf88;
+  --warning: #c4a484;
+  --destructive: #d8a8bb;
+
+  /* Shadows for Neumorphism */
+  --shadow-light: rgba(255, 255, 255, 0.7);
+  --shadow-dark: rgba(174, 162, 148, 0.15);
+  --shadow-inset-light: rgba(255, 255, 255, 0.6);
+  --shadow-inset-dark: rgba(174, 162, 148, 0.2);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-light: var(--accent-light);
+  --color-accent-dark: var(--accent-dark);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-tertiary: var(--tertiary);
+  --color-tertiary-foreground: var(--tertiary-foreground);
+  --color-sage: var(--sage);
+  --color-sage-foreground: var(--sage-foreground);
+  --color-sage-light: var(--sage-light);
+  --color-lavender: var(--lavender);
+  --color-lavender-foreground: var(--lavender-foreground);
+  --color-lavender-light: var(--lavender-light);
+  --color-stone: var(--stone);
+  --color-stone-foreground: var(--stone-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-destructive: var(--destructive);
+  --color-shadow-light: var(--shadow-light);
+  --color-shadow-dark: var(--shadow-dark);
+  --color-shadow-inset-light: var(--shadow-inset-light);
+  --color-shadow-inset-dark: var(--shadow-inset-dark);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Sophisticated Dark - Warm Charcoal Palette */
+    --background: #1c1916;
+    --foreground: #f5f2ee;
+    --muted: #2b2520;
+    --muted-foreground: #9c9289;
+    --card: #252017;
+    --card-foreground: #f5f2ee;
+    --border: #3a342b;
+    --accent: #d8a8bb;
+    --accent-foreground: #1c1916;
+    --accent-light: #3d2e2e;
+    --accent-dark: #b8888b;
+    --secondary: #322d25;
+    --secondary-foreground: #c4b8a9;
+    --tertiary: #8b7355;
+    --tertiary-foreground: #f5f2ee;
+    --sage: #7a8c6e;
+    --sage-foreground: #f5f2ee;
+    --sage-light: #2e3529;
+    --lavender: #9b8aad;
+    --lavender-foreground: #f5f2ee;
+    --lavender-light: #342b40;
+    --stone: #94917f;
+    --stone-foreground: #f5f2ee;
+    --success: #7a8c6e;
+    --warning: #8b7355;
+    --destructive: #d8a8bb;
+
+    /* Dark Mode Shadows */
+    --shadow-light: rgba(255, 255, 255, 0.03);
+    --shadow-dark: rgba(0, 0, 0, 0.4);
+    --shadow-inset-light: rgba(255, 255, 255, 0.02);
+    --shadow-inset-dark: rgba(0, 0, 0, 0.5);
   }
+}
+
+/* Base styles */
+* {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+/* Typography improvements */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+/* Focus styles */
+:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Selection styles */
+::selection {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-dark) 100%);
+  border-radius: 10px;
+  border: 2px solid var(--background);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--accent-dark) 0%, var(--accent) 100%);
+}
+
+/* Neumorphism Utility Classes */
+.neu-convex {
+  box-shadow:
+    8px 8px 16px var(--shadow-dark),
+    -8px -8px 16px var(--shadow-light);
+}
+
+.neu-concave {
+  box-shadow:
+    inset 6px 6px 12px var(--shadow-inset-dark),
+    inset -6px -6px 12px var(--shadow-inset-light);
+}
+
+.neu-pressed {
+  box-shadow:
+    inset 4px 4px 8px var(--shadow-inset-dark),
+    inset -4px -4px 8px var(--shadow-inset-light);
+}
+
+.neu-floating {
+  box-shadow:
+    0 20px 40px rgba(174, 162, 148, 0.12),
+    0 8px 16px rgba(174, 162, 148, 0.08),
+    4px 4px 8px var(--shadow-dark),
+    -4px -4px 8px var(--shadow-light);
+}
+
+.neu-subtle {
+  box-shadow:
+    3px 3px 6px var(--shadow-dark),
+    -3px -3px 6px var(--shadow-light);
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Premium Gradients */
+.gradient-dusty {
+  background: linear-gradient(
+    135deg,
+    var(--accent-light) 0%,
+    var(--accent) 50%,
+    var(--accent-dark) 100%
+  );
+}
+
+.gradient-sage {
+  background: linear-gradient(135deg, var(--sage-light) 0%, var(--sage) 100%);
+}
+
+.gradient-lavender {
+  background: linear-gradient(135deg, var(--lavender-light) 0%, var(--lavender) 100%);
+}
+
+.gradient-earth {
+  background: linear-gradient(135deg, var(--tertiary) 0%, var(--stone) 50%, var(--sage) 100%);
+}
+
+/* Refined Animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes subtle-glow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: subtle-glow 3s ease-in-out infinite;
+}
+
+.transition-premium {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-bounce {
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }

@@ -20,9 +20,15 @@
 # production
 /build
 
+# velite
+/.velite/
+
 # misc
 .DS_Store
 *.pem
+
+# Claude Code
+/.claude/
 
 # debug
 npm-debug.log*
