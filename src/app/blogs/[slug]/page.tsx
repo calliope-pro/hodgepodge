@@ -116,7 +116,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </time>
             <span className="flex items-center gap-1">
               <Clock className="h-4 w-4" />
-              {post.readingTime}分で読める
+              約{post.readingTime}分
             </span>
           </div>
         </header>

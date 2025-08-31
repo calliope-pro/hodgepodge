@@ -6,8 +6,7 @@ import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { Clock, X } from "lucide-react"
 import { NeuContainer, NeuButton, NeuCard, NeuTag } from "@/components/ui"
-import { TagFilter } from "@/components/TagFilter"
-import { SearchCombobox } from "@/components/SearchCombobox"
+import { SearchInput } from "@/components/SearchInput"
 
 function BlogsContent() {
   const searchParams = useSearchParams()
@@ -66,39 +65,64 @@ function BlogsContent() {
       </div>
 
       {/* 検索・フィルタセクション */}
-      <div className="mb-16 space-y-10">
-        {/* 検索フォーム */}
-        <search className="flex gap-4">
-          <SearchCombobox
-            value={searchQuery}
-            onChange={(value) => {
-              setSearchQuery(value)
-              setCurrentPage(1)
-            }}
-          />
-          {(searchQuery || selectedTags.length > 0) && (
-            <NeuButton
-              type="button"
-              onClick={clearFilters}
-              variant="secondary"
-              size="lg"
-              className="whitespace-nowrap flex items-center gap-3"
-            >
-              <X className="h-4 w-4" />
-              クリア
-            </NeuButton>
-          )}
-        </search>
+      <div className="mb-16">
+        <NeuContainer variant="card" size="xl" className="space-y-8 p-8">
+          <h2 className="text-xl font-semibold text-foreground mb-6">記事を探す</h2>
+          
+          {/* 検索とクリアボタン */}
+          <div className="flex flex-col sm:flex-row gap-4 sm:items-start">
+            <div className="flex-1">
+              <SearchInput
+                value={searchQuery}
+                onChange={(value) => {
+                  setSearchQuery(value)
+                  setCurrentPage(1)
+                }}
+              />
+            </div>
+            {(searchQuery || selectedTags.length > 0) && (
+              <NeuButton
+                type="button"
+                onClick={clearFilters}
+                variant="secondary"
+                size="md"
+                className="shrink-0 flex items-center justify-center gap-2 w-full sm:w-auto"
+              >
+                <X className="h-4 w-4" />
+                リセット
+              </NeuButton>
+            )}
+          </div>
 
-        {/* タグフィルタ */}
-        <TagFilter
-          allTags={allTags}
-          selectedTags={selectedTags}
-          onTagsChange={(tags) => {
-            setSelectedTags(tags)
-            setCurrentPage(1)
-          }}
-        />
+          {/* タグフィルタを簡潔に */}
+          <div className="space-y-2 mt-6">
+            <h3 className="text-sm font-medium text-muted-foreground mb-2">タグで絞り込み</h3>
+            <div className="flex flex-wrap gap-3">
+              {allTags.map((tag) => (
+                <button
+                  key={tag}
+                  type="button"
+                  onClick={() => {
+                    const newTags = selectedTags.includes(tag)
+                      ? selectedTags.filter((t) => t !== tag)
+                      : [...selectedTags, tag]
+                    setSelectedTags(newTags)
+                    setCurrentPage(1)
+                  }}
+                  className="border-none bg-transparent p-0 cursor-pointer"
+                >
+                  <NeuTag
+                    variant="sage"
+                    size="md"
+                    active={selectedTags.includes(tag)}
+                  >
+                    {tag}
+                  </NeuTag>
+                </button>
+              ))}
+            </div>
+          </div>
+        </NeuContainer>
       </div>
 
       {/* 記事一覧 */}
@@ -206,7 +230,7 @@ function BlogsContent() {
 
 export default function BlogsPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>読み込み中...</div>}>
       <BlogsContent />
     </Suspense>
   )

@@ -29,6 +29,7 @@ export const NeuTag = forwardRef<HTMLElement, NeuTagProps>(
     const finalVariant = active ? "active" : variant
     const classes = cn(
       "inline-flex items-center gap-2 font-medium transition-colors",
+      href ? "cursor-pointer" : "",
       tagVariants[finalVariant],
       tagSizes[size],
       className,

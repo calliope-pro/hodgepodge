@@ -12,7 +12,7 @@ export default function Home() {
       <section className="mb-24 text-center relative">
         <NeuContainer variant="hero" size="xl" className="text-center">
           <h1 className="mb-8 text-6xl md:text-8xl font-bold leading-tight text-foreground tracking-tight">
-            Welcome to <span className="text-accent font-extrabold">Hodgepodge</span>
+            ようこそ<span className="text-accent font-extrabold">Hodgepodge</span>へ
           </h1>
           <p className="mx-auto max-w-4xl text-xl md:text-2xl leading-relaxed text-muted-foreground font-light">
             技術記事から日常の気づきまで、様々なトピックを気軽に投稿するブログサイト。
@@ -88,12 +88,12 @@ export default function Home() {
           size="xl"
           className="mx-auto max-w-5xl gradient-earth text-center"
         >
-          <h2 className="mb-8 text-4xl font-bold text-stone-foreground">About</h2>
+          <h2 className="mb-8 text-4xl font-bold text-stone-foreground">このサイトについて</h2>
           <p className="text-xl leading-relaxed text-stone-foreground/80 font-light max-w-3xl mx-auto">
             <span className="font-semibold text-stone-foreground">Hodgepodge</span>
-            は、Next.js、TypeScript、MDXを使って構築された
+            は、様々な分野のブログ記事をまとめた寄せ集めサイト。
             <br className="hidden md:block" />
-            現代的なブログシステムです。アクセシビリティ、SEO、パフォーマンスを重視して設計。
+            見つけた知識や体験を気軽に共有し、みんなで学び合える場所を目指しています。
           </p>
         </NeuContainer>
       </section>

@@ -27,7 +27,7 @@ export const NeuButton = forwardRef<HTMLButtonElement, NeuButtonProps>(
       <button
         ref={ref}
         className={cn(
-          "font-semibold transition-premium hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100",
+          "font-semibold transition-premium hover:scale-105 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100",
           buttonVariants[variant],
           buttonSizes[size],
           className,

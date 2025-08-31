@@ -6,7 +6,7 @@ const navigation = [
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 glass border-b border-border/30 transition-premium animate-float">
+    <header className="glass border-b border-border/30">
       <div className="container mx-auto px-4">
         {/* デスクトップメニュー */}
         <DesktopMenu navigation={navigation} />
