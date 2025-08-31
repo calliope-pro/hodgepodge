@@ -89,14 +89,14 @@ function BlogsContent() {
                 className="shrink-0 flex items-center justify-center gap-2 w-full sm:w-auto"
               >
                 <X className="h-4 w-4" />
-                リセット
+                クリア
               </NeuButton>
             )}
           </div>
 
           {/* タグフィルタを簡潔に */}
           <div className="space-y-2 mt-6">
-            <h3 className="text-sm font-medium text-muted-foreground mb-2">タグで絞り込み</h3>
+            <h3 className="text-sm font-medium text-muted-foreground mb-2">タグで絞り込む</h3>
             <div className="flex flex-wrap gap-3">
               {allTags.map((tag) => (
                 <button
@@ -217,9 +217,7 @@ function BlogsContent() {
               <div className="mx-auto mb-4 h-12 w-12 text-muted-foreground flex items-center justify-center">
                 <span className="text-2xl">📄</span>
               </div>
-              <p className="text-lg text-muted-foreground">
-                検索条件に一致する記事が見つかりませんでした。
-              </p>
+              <p className="text-lg text-muted-foreground">該当する記事は見つかりませんでした。条件を変更してお試しください。</p>
             </NeuContainer>
           </div>
         )}
@@ -230,7 +228,7 @@ function BlogsContent() {
 
 export default function BlogsPage() {
   return (
-    <Suspense fallback={<div>読み込み中...</div>}>
+    <Suspense fallback={<div>読み込み中です</div>}>
       <BlogsContent />
     </Suspense>
   )

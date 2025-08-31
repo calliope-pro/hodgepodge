@@ -12,12 +12,12 @@ export default function Home() {
       <section className="mb-24 text-center relative">
         <NeuContainer variant="hero" size="xl" className="text-center">
           <h1 className="mb-8 text-6xl md:text-8xl font-bold leading-tight text-foreground tracking-tight">
-            ようこそ<span className="text-accent font-extrabold">Hodgepodge</span>へ
+            個人ブログ <span className="text-accent font-extrabold">Hodgepodge</span>
           </h1>
           <p className="mx-auto max-w-4xl text-xl md:text-2xl leading-relaxed text-muted-foreground font-light">
-            技術記事から日常の気づきまで、様々なトピックを気軽に投稿するブログサイト。
+            <span className="text-accent font-medium">日々の記録や小さな覚え書き</span>を、気ままにまとめる個人ブログ
             <br className="hidden md:block" />
-            <span className="text-accent font-medium">寄せ集めの知識と体験</span>をお届けします。
+            無理のない分量で、ゆっくり更新します
           </p>
         </NeuContainer>
       </section>
@@ -25,7 +25,7 @@ export default function Home() {
       {/* Latest Posts Section */}
       <section className="mb-20">
         <div className="mb-12 flex items-center justify-between">
-          <h2 className="text-4xl font-bold text-foreground">最新の記事</h2>
+          <h2 className="text-4xl font-bold text-foreground">最近の記事</h2>
           <Link href="/blogs">
             <NeuButton variant="primary" size="lg" className="group flex items-center gap-3">
               記事一覧を見る
@@ -79,23 +79,6 @@ export default function Home() {
             <p className="text-muted-foreground text-lg">まだ記事がありません。</p>
           </div>
         )}
-      </section>
-
-      {/* About Section */}
-      <section className="text-center">
-        <NeuContainer
-          variant="card"
-          size="xl"
-          className="mx-auto max-w-5xl gradient-earth text-center"
-        >
-          <h2 className="mb-8 text-4xl font-bold text-stone-foreground">このサイトについて</h2>
-          <p className="text-xl leading-relaxed text-stone-foreground/80 font-light max-w-3xl mx-auto">
-            <span className="font-semibold text-stone-foreground">Hodgepodge</span>
-            は、様々な分野のブログ記事をまとめた寄せ集めサイト。
-            <br className="hidden md:block" />
-            見つけた知識や体験を気軽に共有し、みんなで学び合える場所を目指しています。
-          </p>
-        </NeuContainer>
       </section>
     </div>
   )

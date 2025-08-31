@@ -65,10 +65,7 @@ export default async function TagPage({ params }: TagPageProps) {
         </div>
 
         <h1 className="mb-4 text-4xl font-bold text-foreground">
-          <NeuTag variant="active" size="md" className="px-4 py-2 font-semibold">
-            {decodedTag}
-          </NeuTag>
-          の記事
+          タグ: <NeuTag variant="active" size="md" className="px-4 py-2 font-semibold">{decodedTag}</NeuTag>
         </h1>
 
         <p className="text-xl text-muted-foreground">{posts.length}件の記事があります</p>

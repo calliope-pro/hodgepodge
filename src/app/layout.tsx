@@ -15,19 +15,19 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Hodgepodge",
-  description: "技術記事から日常の気づきまで、様々なトピックを気軽に投稿するブログサイト",
-  keywords: ["ブログ", "技術記事", "プログラミング", "Next.js", "TypeScript"],
-  authors: [{ name: "Hodgepodge" }],
+  description: "日々の記録と小さな覚え書きを気ままにまとめる個人ブログ。暮らしの気づきや考えごとを、無理のない分量でゆっくり更新します。",
+  keywords: ["ブログ", "日記", "暮らし", "メモ"],
+  authors: [{ name: "calliope" }],
   openGraph: {
     title: "Hodgepodge",
-    description: "技術記事から日常の気づきまで、様々なトピックを気軽に投稿するブログサイト",
+    description: "日々の記録と小さな覚え書きを気ままにまとめる個人ブログ。暮らしの気づきや考えごとを、無理のない分量でゆっくり更新します。",
     type: "website",
     locale: "ja_JP",
   },
   twitter: {
     card: "summary_large_image",
     title: "Hodgepodge",
-    description: "技術記事から日常の気づきまで、様々なトピックを気軽に投稿するブログサイト",
+    description: "日々の記録と小さな覚え書きを気ままにまとめる個人ブログ。暮らしの気づきや考えごとを、無理のない分量でゆっくり更新します。",
   },
 }
 

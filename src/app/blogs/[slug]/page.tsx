@@ -31,10 +31,10 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
 
   return {
-    title: `${post.title} | Hodgepodge`,
+    title: `${post.title}`,
     description: post.description,
     keywords: post.keywords,
-    authors: [{ name: "Hodgepodge" }],
+    authors: [{ name: "calliope" }],
     openGraph: {
       title: post.title,
       description: post.description,
@@ -95,7 +95,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       <article className="py-12">
         {/* ヘッダー */}
-        <header className="mb-8">
+        <header>
           <div className="mb-4 flex flex-wrap gap-2">
             {post.tags.map((tag) => (
               <NeuTag key={tag} href={`/tags/${tag}`} variant="sage" size="md">
@@ -116,7 +116,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </time>
             <span className="flex items-center gap-1">
               <Clock className="h-4 w-4" />
-              約{post.readingTime}分
+              読了目安: 約{post.readingTime}分
             </span>
           </div>
         </header>
@@ -152,7 +152,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         {/* 関連記事 */}
         {relatedPosts.length > 0 && (
           <section className="mt-16 border-t border-border pt-8">
-            <h2 className="mb-6 text-2xl font-bold text-foreground">関連記事</h2>
+            <h2 className="mb-6 text-2xl font-bold text-foreground">あわせて読みたい記事</h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {relatedPosts.map((relatedPost) => (
                 <NeuCard

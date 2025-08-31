@@ -9,14 +9,12 @@ interface SearchInputProps {
   placeholder?: string
 }
 
-export function SearchInput({ value, onChange, placeholder = "記事を検索..." }: SearchInputProps) {
+export function SearchInput({ value, onChange, placeholder = "キーワードまたはタグで検索" }: SearchInputProps) {
   const searchId = useId()
 
   return (
     <div className="relative">
-      <label htmlFor={searchId} className="sr-only">
-        記事を検索
-      </label>
+      <label htmlFor={searchId} className="sr-only">検索</label>
       <div className="relative">
         <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground pointer-events-none" />
         <input
