@@ -6,7 +6,7 @@ export const dynamic = "force-static"
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts()
   const tags = getAllTags()
-  const baseUrl = "https://hodgepodge.example.com" // 実際のドメインに変更
+  const baseUrl = "https://www.hodge-podge.blog" // 実際のドメインに変更
 
   const staticPages = [
     {

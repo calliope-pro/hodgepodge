@@ -1,6 +1,10 @@
 import { defineConfig, s } from "velite"
 import readingTime from "reading-time"
 import { v5 as uuidv5 } from "uuid"
+import dayjs from "dayjs"
+import utc from "dayjs/plugin/utc.js"
+
+dayjs.extend(utc)
 
 export default defineConfig({
   root: "src/content",
@@ -36,7 +40,7 @@ export default defineConfig({
           raw: s.markdown(),
         })
         .transform((data, { meta }) => {
-          const today = new Date()
+          const today = dayjs().utc().add(9, "hour").toDate()
           const publishDate = new Date(data.datePublished)
 
           // Generate slug from filename if not provided, or use fixed UUID based on file path

@@ -1,0 +1,51 @@
+# AUGUSTUS実行方法
+condaの環境下で動作するAUGUSTUSのインストールと学習方法についてまとめます。
+少し苦闘したので、同じように苦闘する人が減ることを願って。
+
+## インストール・設定
+
+### 1. インストール
+```bash
+# mambaパッケージマネージャーを使用
+mamba install -c bioconda -c conda-forge augustus
+
+# boost依存関係の修正（py-boostが競合する場合）
+mamba remove py-boost -y
+mamba install -c conda-forge libboost=x.xx.xx -y
+```
+
+### 2. 設定ディレクトリの準備
+```bash
+# 作業ディレクトリにconfigをコピー
+cp -r $CONDA_PREFIX/config /path/to/workdir/augustus/config
+
+# 環境変数を設定
+export AUGUSTUS_CONFIG_PATH=/path/to/workdir/augustus/config
+```
+
+### 3. 動作確認
+```bash
+augustus --help  # エラーが出なければOK
+```
+
+## 学習の実行例
+
+### 1. データ準備
+```bash
+# GFFをGenBank形式に変換（1000bpのフランキング領域ってなに？？）
+gff2gbSmallDNA.pl annotation.gff3 genome.fa 1000 training_data.gb
+```
+
+### 2. 学習実行
+```bash
+# 基本学習（genericパラメータから開始）
+etraining --species=generic --AUGUSTUS_CONFIG_PATH=$AUGUSTUS_CONFIG_PATH training_data.gb
+# オプション: パラメータ最適化(基本となにが違うの？)
+# optimize_augustus.pl --species=generic training_data.gb
+```
+
+### 3. カスタム種の作成
+```bash
+# 学習後のパラメータを新しい種として保存
+cp -r $AUGUSTUS_CONFIG_PATH/species/generic $AUGUSTUS_CONFIG_PATH/species/myspecies
+```
