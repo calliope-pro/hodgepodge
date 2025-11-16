@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/", "/_next/"],
     },
-    sitemap: "https://hodgepodge.example.com/sitemap.xml", // 実際のドメインに変更
+    sitemap: "https://www.hodge-podge.blog/sitemap.xml", // 実際のドメインに変更
   }
 }
