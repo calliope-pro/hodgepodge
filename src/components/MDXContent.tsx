@@ -30,12 +30,24 @@ export function MDXContent({ code }: MDXContentProps) {
     return fn([{ Fragment, jsx, jsxs }]).default
   }, [code])
 
+  // 外部リンクに target="_blank" rel="noopener noreferrer" を自動追加
+  const LinkComponent = ({ href, children, ...props }: { href?: string; children: React.ReactNode; [key: string]: unknown }) => {
+    const isExternalLink = href?.startsWith('http://') || href?.startsWith('https://')
+
+    if (isExternalLink) {
+      return createElement('a', { href, target: '_blank', rel: 'noopener noreferrer', ...props }, children)
+    }
+
+    return createElement('a', { href, ...props }, children)
+  }
+
   const components = {
     h2: createHeadingComponent(2),
     h3: createHeadingComponent(3),
     h4: createHeadingComponent(4),
     h5: createHeadingComponent(5),
     h6: createHeadingComponent(6),
+    a: LinkComponent,
   }
 
   return (

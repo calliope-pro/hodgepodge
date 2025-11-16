@@ -1,0 +1,139 @@
+---
+title: "Miniconda と Mamba のインストール"
+description: "サイエンス系パッケージの環境構築に必要となるMinicondaとMambaについて、インストール方法と基本的な使い方を紹介します。uvでは対応できないPyPI未公開パッケージを扱う際に役立つツールで、Mambaは高速な依存関係解決が特徴です。"
+datePublished: "2025-11-17"
+tags: ["プログラミング", "Python"]
+keywords: ["Miniconda", "Mamba", "conda", "Python", "環境構築", "パッケージ管理"]
+relatedPosts: ["2025-11-17-uv-python-manager.mdx"]
+---
+
+## Miniconda とは
+
+Minicondaは、Pythonとcondaパッケージマネージャーを含む軽量版のAnacondaディストリビューションです。Anacondaが数GBのサイズで多数のパッケージをプリインストールしているのに対し、Minicondaは約350MBの最小構成で提供されます。
+
+必要なパッケージを自分で選んでインストールできるため、ディスク容量の節約と柔軟な環境構築が可能です。
+
+## なぜ Miniconda と Mamba が必要なのか
+
+最近ではuvが主流のPython環境管理ツールとなっていますが、サイエンス系のパッケージの中にはPyPIに存在しないものがあります。このような場合、conda-forgeなどのcondaチャンネルからインストールする必要があるため、Minicondaが必要になります。
+
+ただし、condaは依存関係の解決に時間がかかることが課題でした。そこで登場したのがMambaです。MambaはC++で実装されており、並列ダウンロードと高速な依存関係解決により、condaと比較して大幅に処理時間を短縮できます。
+
+## Miniconda のインストール
+
+### macOS（Apple Silicon）
+
+以下のコマンドでMinicondaをインストールします。`<インストール先パス>`は任意のディレクトリに変更できます（例: `~/miniconda3`）。
+
+```bash
+mkdir -p <インストール先パス>
+curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o <インストール先パス>/miniconda.sh
+bash <インストール先パス>/miniconda.sh -b -u -p <インストール先パス>
+rm <インストール先パス>/miniconda.sh
+```
+
+インストール後、以下のコマンドでcondaを初期化します。
+
+```bash
+source <インストール先パス>/bin/activate
+conda init --all
+```
+
+### Linux（64ビット）
+
+以下のコマンドでMinicondaをインストールします。`<インストール先パス>`は任意のディレクトリに変更できます（例: `~/miniconda3`）。
+
+```bash
+mkdir -p <インストール先パス>
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O <インストール先パス>/miniconda.sh
+bash <インストール先パス>/miniconda.sh -b -u -p <インストール先パス>
+rm <インストール先パス>/miniconda.sh
+```
+
+macOSと同様に、インストール後は初期化コマンドを実行します。
+
+```bash
+source <インストール先パス>/bin/activate
+conda init --all
+```
+
+### Windows
+
+コマンドプロンプトまたはPowerShellで以下を実行します。
+
+```powershell
+curl https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe -o miniconda.exe
+start /wait "" miniconda.exe /S
+del miniconda.exe
+```
+
+または、[公式サイト](https://www.anaconda.com/download)からインストーラーをダウンロードして実行することもできます。
+
+### インストールの確認
+
+シェルを再起動後、プロンプトに `(base)` が表示されれば、conda環境が正常に動作しています。以下のコマンドで確認できます。
+
+```bash
+conda list
+```
+
+## Mamba のインストール
+
+Mambaは、condaの高速な代替ツールです。C++で実装されており、並列ダウンロードと高速な依存関係解決が特徴です。
+
+### インストール手順
+
+既存のMiniconda環境にMambaをインストールします。
+
+```bash
+conda install -c conda-forge mamba
+```
+
+これで、`conda`コマンドの代わりに`mamba`コマンドが使用できるようになります。
+
+## Mamba/Conda の使い方
+
+### 仮想環境の作成
+
+新しいPython環境を作成します。
+
+```bash
+conda create -n myenv python=3.12
+```
+
+### 環境のアクティベート
+
+```bash
+conda activate myenv
+```
+
+### パッケージのインストール
+
+Mambaを使ってパッケージをインストールします（condaより高速）。
+
+```bash
+mamba install -c conda-forge numpy pandas
+```
+
+### 環境のディアクティベート
+
+```bash
+conda deactivate
+```
+
+## conda と mamba の使い分け
+
+基本的には、以下のように使い分けます。
+
+- **環境の作成・削除・切り替え**: `conda`コマンドを使用
+- **パッケージのインストール・更新**: `mamba`コマンドを使用（高速）
+
+Mambaを導入してもcondaが消えるわけではなく、両者は共存できます。
+
+## まとめ
+
+MinicondaとMambaは、PyPIに存在しないサイエンス系パッケージを扱う際に必要な環境構築ツールです。uvが主流となった現在でも、conda-forgeからのインストールが必要な場合には有用です。
+
+Mambaを活用することで、従来のcondaよりも高速にパッケージ管理が行えます。
+
+より詳しい情報は、[Miniconda公式ドキュメント](https://docs.anaconda.com/miniconda/)と[Mamba公式ドキュメント](https://mamba.readthedocs.io/)をご参照ください。

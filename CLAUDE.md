@@ -268,7 +268,9 @@ relatedPosts: ["2025-08-25-related-article.mdx", "2025-08-20-another-article.mdx
   ```mdx
   ![説明文](/images/blog/foo.png)
   ```
-* 外部リンクは `[テキスト](URL){target="_blank" rel="noopener noreferrer"}` を推奨
+* 外部リンクは通常のMarkdown記法 `[テキスト](URL)` で記述
+  - `http://`または`https://`で始まるURLは自動的に`target="_blank" rel="noopener noreferrer"`が付与される
+  - 内部リンク（`/`で始まる）は通常のリンクとして扱われる
 * 強調は `**bold**` を基本。`_italic_` は補助的に使用。
 * 箇条書きは `-`、番号リストは `1.` を使う
 * 引用は `>` を使う（ネスト可）
