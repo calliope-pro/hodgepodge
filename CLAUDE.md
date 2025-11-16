@@ -102,7 +102,7 @@ AI運用5原則
 * Hero画像（任意）
 * TOC（自動生成）
 * MDXレンダリング
-* 関連記事（タグ一致）
+* 関連記事（フロントマターで明示的に指定、指定がない場合は非表示）
 * 構造化データ（`BlogPosting` JSON-LD）
 * SEOメタデータ自動生成
 
@@ -128,11 +128,13 @@ AI運用5原則
 
 * `keywords: string[]`（SEO用）
 * `hero: { src: string; alt: string; width?: number; height?: number }`
+* `relatedPosts: string[]`（関連記事をファイル名で指定、例: ["2025-11-17-uv-python-manager.mdx"]）
 
 ### 自動生成フィールド
 
 ✅ **実装完了**
 * `slug: string`（**uuidで自動生成**）
+* `filePath: string`（ファイルパス、関連記事検索に使用）
 * `readingTime: number`（本文文字数から算出）
 * `canonical: string`（slugから生成）
 * `ogImage: string`（自動生成URL）
@@ -239,12 +241,19 @@ title: "記事タイトル"
 description: "SEO/OG用の概要文。120〜160文字程度。"
 datePublished: "2025-08-28"
 tags: ["diary", "life"]
-keywords: ["日記", "暮らし", "メモ"] # SEO用
-hero:
+keywords: ["日記", "暮らし", "メモ"] # SEO用（任意）
+hero: # 任意
   src: "/images/blog/hero-sample.jpg"
   alt: "Hero画像の説明"
+relatedPosts: ["2025-08-25-related-article.mdx", "2025-08-20-another-article.mdx"] # 任意、ファイル名で指定
 ---
 ```
+
+**関連記事の指定方法**:
+* `relatedPosts`フィールドにファイル名の配列で指定（任意）
+* 指定された記事が記事詳細ページの下部に「あわせて読みたい記事」として表示される
+* 指定がない場合は関連記事セクション自体が非表示になる
+* 最大3件まで表示される
 
 ### 本文
 

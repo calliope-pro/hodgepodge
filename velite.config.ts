@@ -34,6 +34,7 @@ export default defineConfig({
               height: s.number().optional(),
             })
             .optional(),
+          relatedPosts: s.array(s.string()).optional(),
           slug: s.slug("posts").optional(),
           draft: s.boolean().default(false),
           content: s.mdx(),
@@ -58,6 +59,7 @@ export default defineConfig({
           return {
             ...data,
             slug,
+            filePath: meta.path as string,
             readingTime: Math.ceil(stats.minutes),
             canonical: `/blogs/${slug}`,
             ogImage: `/api/og?title=${encodeURIComponent(data.title)}`,

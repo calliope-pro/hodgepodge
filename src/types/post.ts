@@ -10,7 +10,9 @@ export interface Post {
     width?: number
     height?: number
   }
+  relatedPosts?: string[]
   slug: string
+  filePath: string
   draft: boolean
   content: string
   raw: string

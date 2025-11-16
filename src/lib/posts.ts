@@ -33,21 +33,19 @@ export function getAllTags(): string[] {
 }
 
 export function getRelatedPosts(currentPost: Post, limit = 3): Post[] {
-  const related = posts
-    .filter(
-      (post) =>
-        !post.draft &&
-        post.slug &&
-        post.slug !== currentPost.slug &&
-        post.tags.some((tag) => currentPost.tags.includes(tag)),
-    )
-    .sort((a, b) => {
-      const aMatchCount = a.tags.filter((tag) => currentPost.tags.includes(tag)).length
-      const bMatchCount = b.tags.filter((tag) => currentPost.tags.includes(tag)).length
-      return bMatchCount - aMatchCount
-    })
-    .slice(0, limit)
-    .map((post) => ({ ...post, slug: post.slug as string }))
+  // If relatedPosts is specified, use those files
+  if (currentPost.relatedPosts && currentPost.relatedPosts.length > 0) {
+    const related: Post[] = []
+    for (const fileName of currentPost.relatedPosts) {
+      if (related.length >= limit) break
+      const post = posts.find((p) => p.filePath.endsWith(fileName) && !p.draft && p.slug)
+      if (post && post.slug) {
+        related.push({ ...post, slug: post.slug })
+      }
+    }
+    return related
+  }
 
-  return related
+  // If relatedPosts is not specified, return empty array
+  return []
 }

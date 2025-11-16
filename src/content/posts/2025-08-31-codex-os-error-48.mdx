@@ -1,6 +1,6 @@
 ---
 title: "codexの導入で『Address already in use (os error 48)』エラーに遭遇"
-description: "CLI版codexのサインイン時に『Address already in use (os error 48)』が発生。起動ポートが他プロセスに占有されていました。lsofでPIDを特定しkillで終了。自環境は1455番ポート。"
+description: "CLI版codexのサインイン時に『Address already in use (os error 48)』が発生しました。起動ポートが他プロセスに占有されていたため、lsofコマンドでPIDを特定してkillで終了させることで解決しました。自環境では1455番ポートが使用されていました。"
 datePublished: "2025-08-31"
 tags: ["プログラミング"]
 keywords: ["codex", "os error 48", "Address already in use", "lsof", "kill", "1455"]
