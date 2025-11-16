@@ -47,7 +47,7 @@ export default function RootLayout({
           <footer className="border-t border-border bg-muted">
             <div className="container mx-auto px-4 py-8">
               <div className="text-center text-sm text-muted-foreground">
-                <p>© 2025 Hodgepodge. Code: MIT License, Content: CC BY 4.0</p>
+                <p>© 2025 Hodgepodge</p>
               </div>
             </div>
           </footer>
