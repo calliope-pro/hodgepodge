@@ -119,6 +119,20 @@ mamba install -c conda-forge numpy pandas
 conda deactivate
 ```
 
+### Pythonスクリプトの実行
+
+環境をアクティベートした状態で、通常通り `python` コマンドでスクリプトを実行できます。
+
+```bash
+# 環境をアクティベート
+conda activate myenv
+
+# Pythonスクリプトを実行
+python script.py
+```
+
+アクティベートされた環境のPythonとパッケージが使用されるため、環境ごとに異なるバージョンのPythonやライブラリを切り替えて実行できます。
+
 ## conda と mamba の使い分け
 
 基本的には、以下のように使い分けます。
