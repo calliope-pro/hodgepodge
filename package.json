@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "velite build && next build --turbopack && pagefind --source out",
+    "build": "velite build && next build --turbopack && pagefind --site out",
     "build:dev": "velite build && next build --turbopack",
     "start": "next start",
     "lint": "biome lint .",
