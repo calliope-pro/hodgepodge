@@ -370,6 +370,10 @@ a:hover {
   .edit-grid-asym {
     grid-template-columns: 1fr;
   }
+
+  .edit-section {
+    padding: 2rem 0;
+  }
 }
 
 /* Editorial typography decorations */
