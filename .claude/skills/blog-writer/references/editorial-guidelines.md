@@ -170,6 +170,44 @@ When writing the `description` field in frontmatter:
 **Bad (too long):**
 "Pythonの環境管理は大変ですが、uvという新しいツールを使うと簡単になります。この記事ではuvのインストール方法から、実際のプロジェクトでの使い方、トラブルシューティングまで詳しく解説します。初心者の方にも分かりやすく説明していますので、ぜひ参考にしてください。"
 
+## Japanese Naturalness Guidelines
+
+### Avoid AI-Like Phrasing
+
+**Avoid these patterns:**
+- "〜について説明します" → Use: 導入や設定の手順をまとめます
+- "〜する必要があります" → Use: 〜します / 〜します
+- "〜することができます" → Overuse, vary with: 〜できます / 〜可能です
+- "〜してください" → Use: 〜します / 手順は以下の通りです
+
+**Better alternatives:**
+- Instead of "この記事では〜を紹介します" → Start with the topic directly
+- Instead of "以下の手順に従ってください" → "手順は以下の通りです"
+- Instead of "最後に〜をまとめます" → Just summarize naturally
+
+### Flow and Connection
+
+- **Use natural transitions**: 具体的には / そのため / 一方で
+- **Avoid mechanical listing**: Connect related points rather than bullet-heavy sections
+- **Vary sentence beginnings**: Not every sentence should start with the same pattern
+- **Contextual explanations**: Explain why, not just what
+
+### Common Japanese Phrasing Improvements
+
+| AI-Like (Avoid) | Natural (Use) |
+|----------------|---------------|
+| 設定します | 設定は以下の通りです |
+| 確認します | 確認しておきます / 確認します |
+| 完了しました | 完了です / これで準備できました |
+| します | 行います / 進めます |
+
+### Voice Consistency
+
+- Maintain consistent persona throughout
+- Avoid sudden tone shifts
+- Write as if explaining to a peer, not instructing a subordinate
+- Use humble expressions sparingly and genuinely
+
 ## Formatting Checklist
 
 Before finalizing an article:
@@ -185,3 +223,5 @@ Before finalizing an article:
 - [ ] No emoticons or excessive exclamation
 - [ ] Tone is 80% polite, 20% plain
 - [ ] Article provides unique value
+- [ ] Japanese sounds natural, not AI-generated
+- [ ] No mechanical listing or repetitive phrasing

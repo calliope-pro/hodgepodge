@@ -1,0 +1,66 @@
+---
+title: "Claude CodeでGLM-4.7を使う"
+description: "Claude CodeにGLM-4.7モデルを導入する方法をまとめます。GLMコーディングプランへの登録とAPIキーの設定、自動設定スクリプトによる環境構築の手順を順を追って説明します。"
+datePublished: "2025-01-14"
+tags: ["プログラミング", "Claude Code"]
+keywords: ["Claude Code", "GLM-4.7", "GLMコーディングプラン", "z.ai"]
+---
+
+## きっかけ
+
+GLM-4.7が話題になっています。安価でClaude Opus 4.5に匹敵するとの噂を聞き、実際に試してみることにしました。
+
+## GLMコーディングプランの登録
+
+最初に、z.aiのGLMコーディングプランへ登録します。ウェブサイトから必要な情報を入力し、APIキーを発行してもらいます。
+
+## 環境設定
+
+設定方法は2通りあります。
+
+### 自動設定スクリプト
+
+以下のコマンドで設定ファイルが自動生成されます。
+
+```bash
+curl -O "https://cdn.bigmodel.cn/install/claude_code_zai_env.sh" && bash ./claude_code_zai_env.sh
+```
+
+### npxコマンド
+
+もう一つは、npxで設定ヘルパーを実行する方法です。
+
+```bash
+npx @z_ai/coding-helper
+```
+
+## 設定ファイルの確認
+
+自動生成された `~/.claude/settings.json` を開き、取得したAPIキーを `ANTHROPIC_AUTH_TOKEN` に設定します。
+
+```json
+{
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "your_zai_api_key",
+    "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",
+    "API_TIMEOUT_MS": "3000000",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-4.5-air",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-4.7",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-4.7"
+  }
+}
+```
+
+これで、OpusとSonnetにはGLM-4.7、HaikuにはGLM-4.5-Airが割り当てられます。
+
+## 起動
+
+設定が終わったら、ターミナルから `claude` を実行します。「このAPIキーを使用しますか？」と聞かれたら「はい」を選択します。
+
+## 使用感
+
+設定自体はモデルの割り当てを変えるだけですので、難しいところはありません。5時間ごとの上限はありますが、かなり緩く設定されています。実際に使ってみて、悪くない印象を受けました。
+
+気になる点を挙げるとすれば、月ごとにsearchやtoolにも上限があることです。精度面ではClaude Opus 4.5に及びませんが、使いやすさは十分です。
+
+コスパを重視するなら、試してみる価値はあるモデルです。
