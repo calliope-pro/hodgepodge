@@ -4,9 +4,8 @@ import { getAllPosts, getAllTags } from "@/lib/posts"
 import { useState, useMemo, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
-import { Clock, X } from "lucide-react"
-import { NeuContainer, NeuButton, NeuCard, NeuTag } from "@/components/ui"
-import { SearchInput } from "@/components/SearchInput"
+import { Clock, X, Search } from "lucide-react"
+import { EditContainer, EditButton, EditCard, EditTag, EditInput } from "@/components/ui"
 
 function BlogsContent() {
   const searchParams = useSearchParams()
@@ -45,7 +44,6 @@ function BlogsContent() {
     currentPage * postsPerPage,
   )
 
-
   const clearFilters = () => {
     setSearchQuery("")
     setSelectedTags([])
@@ -53,182 +51,204 @@ function BlogsContent() {
   }
 
   return (
-    <div className="py-16">
-      <div className="mb-16 text-center">
-        <NeuContainer variant="floating" size="xl" gradient="sage" className="mb-8">
-          <h1 className="mb-6 text-4xl font-bold text-foreground">記事一覧</h1>
-          <p className="text-2xl text-muted-foreground font-light">
-            <span className="text-accent font-semibold">{filteredPosts.length}件</span>
-            の記事があります
-          </p>
-        </NeuContainer>
-      </div>
+    <div className="edit-section min-h-screen">
+      <EditContainer>
+        {/* Page Header */}
+        <div className="mb-16 text-center">
+          <div className="edit-byline mb-4">ARCHIVE</div>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">記事一覧</h1>
+          <div className="edit-meta justify-center">
+            <span className="edit-line" />
+            <span className="mx-3">{filteredPosts.length} ARTICLES</span>
+            <span className="edit-line" />
+          </div>
+        </div>
 
-      {/* 検索・フィルタセクション */}
-      <div className="mb-16">
-        <NeuContainer variant="card" size="xl" className="space-y-8 p-8">
-          <h2 className="text-xl font-semibold text-foreground mb-6">記事を探す</h2>
-          
-          {/* 検索とクリアボタン */}
-          <div className="flex flex-col sm:flex-row gap-4 sm:items-start">
-            <div className="flex-1">
-              <SearchInput
-                value={searchQuery}
-                onChange={(value) => {
-                  setSearchQuery(value)
-                  setCurrentPage(1)
-                }}
-              />
+        {/* Search & Filter Section */}
+        <div className="mb-16">
+          <EditCard variant="subtle" size="lg" className="p-8">
+            <div className="mb-6">
+              <h2 className="text-xl font-bold mb-2">記事を探す</h2>
+              <p className="text-sm text-muted-foreground">キーワードやタグで絞り込み</p>
             </div>
+
+            {/* Search input */}
+            <div className="mb-6">
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <EditInput
+                  type="search"
+                  placeholder="キーワードを入力..."
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value)
+                    setCurrentPage(1)
+                  }}
+                  className="pl-12"
+                />
+              </div>
+            </div>
+
+            {/* Tag filters */}
+            <div className="mb-6">
+              <h3 className="text-sm font-medium mb-3 edit-byline">TAGS</h3>
+              <div className="flex flex-wrap gap-2">
+                {allTags.map((tag) => (
+                  <button
+                    key={tag}
+                    type="button"
+                    onClick={() => {
+                      const newTags = selectedTags.includes(tag)
+                        ? selectedTags.filter((t) => t !== tag)
+                        : [...selectedTags, tag]
+                      setSelectedTags(newTags)
+                      setCurrentPage(1)
+                    }}
+                    className="border-none bg-transparent p-0 cursor-pointer"
+                  >
+                    <EditTag
+                      variant={selectedTags.includes(tag) ? "pastel-pink" : "default"}
+                      size="md"
+                    >
+                      {tag}
+                    </EditTag>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Clear button */}
             {(searchQuery || selectedTags.length > 0) && (
-              <NeuButton
+              <EditButton
                 type="button"
                 onClick={clearFilters}
-                variant="secondary"
-                size="md"
-                className="shrink-0 flex items-center justify-center gap-2 w-full sm:w-auto"
+                variant="default"
+                size="sm"
+                className="flex items-center gap-2"
               >
                 <X className="h-4 w-4" />
                 クリア
-              </NeuButton>
+              </EditButton>
             )}
-          </div>
+          </EditCard>
+        </div>
 
-          {/* タグフィルタを簡潔に */}
-          <div className="space-y-2 mt-6">
-            <h3 className="text-sm font-medium text-muted-foreground mb-2">タグで絞り込む</h3>
-            <div className="flex flex-wrap gap-3">
-              {allTags.map((tag) => (
-                <button
-                  key={tag}
-                  type="button"
-                  onClick={() => {
-                    const newTags = selectedTags.includes(tag)
-                      ? selectedTags.filter((t) => t !== tag)
-                      : [...selectedTags, tag]
-                    setSelectedTags(newTags)
-                    setCurrentPage(1)
-                  }}
-                  className="border-none bg-transparent p-0 cursor-pointer"
-                >
-                  <NeuTag
-                    variant="sage"
-                    size="md"
-                    active={selectedTags.includes(tag)}
+        {/* Articles Grid */}
+        <section aria-live="polite">
+          {paginatedPosts.length > 0 ? (
+            <>
+              <div className="edit-grid-3 gap-6 mb-12">
+                {paginatedPosts.map((post, index) => (
+                  <EditCard
+                    key={post.slug}
+                    variant="default"
+                    size="lg"
+                    className={`group ${index % 3 === 0 ? "edit-bg-pastel-peach" : index % 3 === 1 ? "edit-bg-pastel-mint" : ""}`}
                   >
-                    {tag}
-                  </NeuTag>
-                </button>
-              ))}
-            </div>
-          </div>
-        </NeuContainer>
-      </div>
+                    {/* Tags */}
+                    <div className="mb-4 flex flex-wrap gap-2">
+                      {post.tags.map((tag) => (
+                        <EditTag
+                          key={tag}
+                          href={`/tags/${tag}`}
+                          variant="pastel-lavender"
+                          size="sm"
+                        >
+                          {tag}
+                        </EditTag>
+                      ))}
+                    </div>
 
-      {/* 記事一覧 */}
-      <section aria-live="polite">
-        {paginatedPosts.length > 0 ? (
-          <>
-            <div className="mb-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {paginatedPosts.map((post) => (
-                <NeuCard
-                  key={post.slug}
-                  variant="subtle"
-                  size="lg"
-                  gradient="earth"
-                  className="group"
-                >
-                  <div className="mb-4 flex flex-wrap gap-2">
-                    {post.tags.map((tag) => (
-                      <NeuTag key={tag} href={`/tags/${tag}`} variant="sage" size="sm">
-                        {tag}
-                      </NeuTag>
-                    ))}
-                  </div>
-                  <h2 className="mb-3 text-xl font-semibold text-card-foreground">
-                    <Link
-                      href={`/blogs/${post.slug}`}
-                      className="transition-colors hover:text-accent"
+                    {/* Title */}
+                    <h2 className="mb-3 text-lg font-semibold leading-tight">
+                      <Link
+                        href={`/blogs/${post.slug}`}
+                        className="hover:underline decoration-1 underline-offset-2"
+                      >
+                        {post.title}
+                      </Link>
+                    </h2>
+
+                    {/* Description */}
+                    <p className="mb-4 text-sm text-muted-foreground line-clamp-3 leading-relaxed">
+                      {post.description}
+                    </p>
+
+                    {/* Meta */}
+                    <div className="edit-meta pt-4 edit-divider-top">
+                      <time dateTime={post.datePublished} className="edit-meta-item">
+                        {new Date(post.datePublished).toLocaleDateString("ja-JP")}
+                      </time>
+                      <span className="edit-dot" />
+                      <span className="edit-meta-item">
+                        <Clock className="h-3 w-3" />
+                        {post.readingTime}min
+                      </span>
+                    </div>
+                  </EditCard>
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="edit-bg-muted p-6">
+                  <nav
+                    className="flex items-center justify-center gap-2"
+                    aria-label="ページネーション"
+                  >
+                    <EditButton
+                      onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                      disabled={currentPage === 1}
+                      variant="default"
+                      size="sm"
                     >
-                      {post.title}
-                    </Link>
-                  </h2>
-                  <p className="mb-4 text-muted-foreground line-clamp-3 leading-relaxed">
-                    {post.description}
-                  </p>
-                  <div className="flex items-center justify-between text-sm text-muted-foreground">
-                    <time dateTime={post.datePublished}>
-                      {new Date(post.datePublished).toLocaleDateString("ja-JP")}
-                    </time>
-                    <span className="flex items-center gap-1 text-muted-foreground">
-                      <Clock className="h-4 w-4" />
-                      {post.readingTime}分
-                    </span>
-                  </div>
-                </NeuCard>
-              ))}
-            </div>
+                      ←
+                    </EditButton>
 
-            {/* ページネーション */}
-            {totalPages > 1 && (
-              <NeuContainer variant="subtle" size="lg" className="mt-8">
-                <nav
-                  className="flex items-center justify-center space-x-3"
-                  aria-label="ページネーション"
-                >
-                  <NeuButton
-                    onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                    disabled={currentPage === 1}
-                    variant="ghost"
-                    size="md"
-                  >
-                    前へ
-                  </NeuButton>
-
-                  <div className="flex space-x-2">
                     {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                      <NeuButton
+                      <EditButton
                         key={page}
                         onClick={() => setCurrentPage(page)}
-                        variant={currentPage === page ? "primary" : "ghost"}
-                        size="md"
-                        className="px-4 py-2 text-sm font-medium"
+                        variant={currentPage === page ? "primary" : "default"}
+                        size="sm"
                       >
                         {page}
-                      </NeuButton>
+                      </EditButton>
                     ))}
-                  </div>
 
-                  <NeuButton
-                    onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                    disabled={currentPage === totalPages}
-                    variant="ghost"
-                    size="md"
-                  >
-                    次へ
-                  </NeuButton>
-                </nav>
-              </NeuContainer>
-            )}
-          </>
-        ) : (
-          <div className="py-16 text-center">
-            <NeuContainer variant="card" size="md" className="mx-auto max-w-md text-center">
-              <div className="mx-auto mb-4 h-12 w-12 text-muted-foreground flex items-center justify-center">
-                <span className="text-2xl">📄</span>
-              </div>
-              <p className="text-lg text-muted-foreground">該当する記事は見つかりませんでした。条件を変更してお試しください。</p>
-            </NeuContainer>
-          </div>
-        )}
-      </section>
+                    <EditButton
+                      onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                      disabled={currentPage === totalPages}
+                      variant="default"
+                      size="sm"
+                    >
+                      →
+                    </EditButton>
+                  </nav>
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="py-16 text-center">
+              <EditCard variant="subtle" size="lg" className="max-w-md mx-auto text-center">
+                <div className="edit-byline mb-4">NOT FOUND</div>
+                <p className="text-lg text-muted-foreground">
+                  該当する記事は見つかりませんでした。
+                  <br />
+                  条件を変更してお試しください。
+                </p>
+              </EditCard>
+            </div>
+          )}
+        </section>
+      </EditContainer>
     </div>
   )
 }
 
 export default function BlogsPage() {
   return (
-    <Suspense fallback={<div>読み込み中です</div>}>
+    <Suspense fallback={<div className="edit-section text-center">読み込み中です</div>}>
       <BlogsContent />
     </Suspense>
   )

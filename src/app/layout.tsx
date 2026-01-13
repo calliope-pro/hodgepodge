@@ -1,16 +1,12 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { JetBrains_Mono } from "next/font/google"
 import { Header } from "@/components/Header"
 import "./globals.css"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-})
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
 })
 
 export const metadata: Metadata = {
@@ -38,16 +34,61 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="min-h-screen bg-background">
+      <body className={`${jetbrainsMono.variable} antialiased`}>
+        <div className="min-h-screen bg-background flex flex-col">
           <Header />
+
           <main className="flex-1">
-            <div className="container mx-auto px-4">{children}</div>
+            {children}
           </main>
-          <footer className="border-t border-border bg-muted">
-            <div className="container mx-auto px-4 py-8">
-              <div className="text-center text-sm text-muted-foreground">
-                <p>© 2025 Hodgepodge</p>
+
+          {/* Editorial Footer */}
+          <footer className="edit-footer">
+            <div className="edit-container">
+              <div className="edit-grid-2 gap-12 mb-8">
+                {/* About */}
+                <div>
+                  <div className="edit-byline mb-4">HODGEPODGE</div>
+                  <p className="text-sm text-muted-foreground max-w-md leading-relaxed">
+                    日々の記録と小さな覚え書きを気ままにまとめる個人ブログ。
+                    無理のない分量で、ゆっくり更新します。
+                  </p>
+                </div>
+
+                {/* Links */}
+                <div className="text-right">
+                  <div className="edit-byline mb-4">LINKS</div>
+                  <ul className="space-y-2 text-sm">
+                    <li>
+                      <a
+                        href="/"
+                        className="text-muted-foreground hover:text-foreground hover:underline decoration-1 underline-offset-2 transition-colors"
+                      >
+                        ホーム
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="/blogs"
+                        className="text-muted-foreground hover:text-foreground hover:underline decoration-1 underline-offset-2 transition-colors"
+                      >
+                        記事一覧
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Bottom bar */}
+              <div className="edit-divider-top pt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div className="text-xs text-muted-foreground">
+                  © 2025 Hodgepodge. All rights reserved.
+                </div>
+                <div className="edit-meta text-xs">
+                  <span className="edit-line" />
+                  <span className="mx-2">MADE WITH NEXT.JS</span>
+                  <span className="edit-line" />
+                </div>
               </div>
             </div>
           </footer>

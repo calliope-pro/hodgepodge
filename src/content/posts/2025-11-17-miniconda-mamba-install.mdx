@@ -1,5 +1,5 @@
 ---
-title: "Miniconda と Mamba のインストール"
+title: "MinicondaとMambaのインストール"
 description: "サイエンス系パッケージの環境構築に必要となるMinicondaとMambaについて、インストール方法と基本的な使い方を紹介します。uvでは対応できないPyPI未公開パッケージを扱う際に役立つツールで、Mambaは高速な依存関係解決が特徴です。"
 datePublished: "2025-11-17"
 tags: ["プログラミング", "Python"]
@@ -7,19 +7,19 @@ keywords: ["Miniconda", "Mamba", "conda", "Python", "環境構築", "パッケ�
 relatedPosts: ["2025-11-17-uv-python-manager.mdx"]
 ---
 
-## Miniconda とは
+## Minicondaとは
 
 Minicondaは、Pythonとcondaパッケージマネージャーを含む軽量版のAnacondaディストリビューションです。Anacondaが数GBのサイズで多数のパッケージをプリインストールしているのに対し、Minicondaは約350MBの最小構成で提供されます。
 
 必要なパッケージを自分で選んでインストールできるため、ディスク容量の節約と柔軟な環境構築が可能です。
 
-## なぜ Miniconda と Mamba が必要なのか
+## なぜMinicondaとMambaが必要なのか
 
 最近ではuvが主流のPython環境管理ツールとなっていますが、サイエンス系のパッケージの中にはPyPIに存在しないものがあります。このような場合、conda-forgeなどのcondaチャンネルからインストールする必要があるため、Minicondaが必要になります。
 
 ただし、condaは依存関係の解決に時間がかかることが課題でした。そこで登場したのがMambaです。MambaはC++で実装されており、並列ダウンロードと高速な依存関係解決により、condaと比較して大幅に処理時間を短縮できます。
 
-## Miniconda のインストール
+## Minicondaのインストール
 
 ### macOS（Apple Silicon）
 
@@ -75,7 +75,7 @@ del miniconda.exe
 conda list
 ```
 
-## Mamba のインストール
+## Mambaのインストール
 
 Mambaは、condaの高速な代替ツールです。C++で実装されており、並列ダウンロードと高速な依存関係解決が特徴です。
 
@@ -89,7 +89,7 @@ conda install -c conda-forge mamba
 
 これで、`conda`コマンドの代わりに`mamba`コマンドが使用できるようになります。
 
-## Mamba/Conda の使い方
+## Mamba/Condaの使い方
 
 ### 仮想環境の作成
 
@@ -133,7 +133,7 @@ python script.py
 
 アクティベートされた環境のPythonとパッケージが使用されるため、環境ごとに異なるバージョンのPythonやライブラリを切り替えて実行できます。
 
-## conda と mamba の使い分け
+## condaとmambaの使い分け
 
 基本的には、以下のように使い分けます。
 

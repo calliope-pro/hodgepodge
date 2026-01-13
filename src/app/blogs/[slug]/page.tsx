@@ -6,8 +6,8 @@ import { notFound } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 import type { Metadata } from "next"
-import { Clock } from "lucide-react"
-import { NeuTag, NeuCard } from "@/components/ui"
+import { Clock, ArrowLeft } from "lucide-react"
+import { EditTag, EditCard, EditContainer } from "@/components/ui"
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -93,96 +93,174 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <article className="py-12">
-        {/* ヘッダー */}
-        <header>
-          <div className="mb-4 flex flex-wrap gap-2">
-            {post.tags.map((tag) => (
-              <NeuTag key={tag} href={`/tags/${tag}`} variant="sage" size="md">
-                {tag}
-              </NeuTag>
-            ))}
-          </div>
-
-          <h1 className="mb-4 text-4xl font-bold text-foreground md:text-5xl">{post.title}</h1>
-
-          <div className="flex items-center space-x-6 text-sm text-muted-foreground">
-            <time dateTime={post.datePublished}>
-              {new Date(post.datePublished).toLocaleDateString("ja-JP", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </time>
-            <span className="flex items-center gap-1">
-              <Clock className="h-4 w-4" />
-              読了目安: 約{post.readingTime}分
-            </span>
-          </div>
-        </header>
-
-        {/* Hero画像 */}
-        {post.hero && (
+      <article className="edit-section">
+        {/* Header section - full width */}
+        <EditContainer>
+          {/* Back button */}
           <div className="mb-8">
-            <Image
-              src={post.hero.src.src}
-              alt={post.hero.alt}
-              width={post.hero.src.width}
-              height={post.hero.src.height}
-              className="w-full rounded-lg object-cover"
-              priority
-            />
+            <Link
+              href="/blogs"
+              className="edit-meta hover:text-foreground transition-colors inline-flex items-center gap-2"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span>記事一覧に戻る</span>
+            </Link>
           </div>
-        )}
 
-        <div className="grid gap-8 lg:grid-cols-6">
-          {/* コンテンツ */}
-          <main className="lg:col-span-5">
-            <MDXContent code={post.content} />
-          </main>
-
-          {/* 目次 */}
-          <aside className="lg:col-span-1">
-            <div className="sticky top-8">
-              <TableOfContents items={tocItems} />
-            </div>
-          </aside>
-        </div>
-
-        {/* 関連記事 */}
-        {relatedPosts.length > 0 && (
-          <section className="mt-16 border-t border-border pt-8">
-            <h2 className="mb-6 text-2xl font-bold text-foreground">あわせて読みたい記事</h2>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {relatedPosts.map((relatedPost) => (
-                <NeuCard
-                  key={relatedPost.slug}
-                  variant="subtle"
-                  size="lg"
-                  gradient="earth"
-                  className="group"
-                >
-                  <div className="mb-2 flex flex-wrap gap-1">
-                    {relatedPost.tags.slice(0, 2).map((tag) => (
-                      <NeuTag key={tag} href={`/tags/${tag}`} variant="sage" size="sm">
-                        {tag}
-                      </NeuTag>
-                    ))}
-                  </div>
-                  <h3 className="mb-2 text-lg font-semibold text-card-foreground">
-                    <Link
-                      href={`/blogs/${relatedPost.slug}`}
-                      className="hover:text-accent transition-colors"
-                    >
-                      {relatedPost.title}
-                    </Link>
-                  </h3>
-                  <p className="text-sm text-muted-foreground line-clamp-2">
-                    {relatedPost.description}
-                  </p>
-                </NeuCard>
+          {/* Article header */}
+          <header className="mb-12">
+            {/* Tags */}
+            <div className="mb-6 flex flex-wrap gap-2">
+              {post.tags.map((tag) => (
+                <EditTag key={tag} href={`/tags/${tag}`} variant="pastel-pink" size="sm">
+                  {tag}
+                </EditTag>
               ))}
             </div>
+
+            {/* Title */}
+            <h1 className="mb-6 text-3xl md:text-4xl lg:text-6xl font-bold tracking-tight leading-tight max-w-4xl">
+              {post.title}
+            </h1>
+
+            {/* Meta */}
+            <div className="edit-meta pb-6 edit-divider-bottom max-w-2xl">
+              <time dateTime={post.datePublished}>
+                {new Date(post.datePublished).toLocaleDateString("ja-JP", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </time>
+              <span className="edit-dot" />
+              <span className="edit-meta-item">
+                <Clock className="h-3 w-3" />
+                {post.readingTime}min read
+              </span>
+            </div>
+          </header>
+
+          {/* Hero image */}
+          {post.hero && (
+            <div className="mb-12 edit-divider-bottom pb-12">
+              <Image
+                src={post.hero.src.src}
+                alt={post.hero.alt}
+                width={post.hero.src.width}
+                height={post.hero.src.height}
+                className="w-full border border-border"
+                priority
+              />
+            </div>
+          )}
+        </EditContainer>
+
+        {/* Main content area with sidebar */}
+        <EditContainer>
+          <div className="grid gap-12 lg:grid-cols-[1fr_280px]">
+            {/* Article content */}
+            <div className="min-w-0">
+              {/* Mobile TOC */}
+              {tocItems.length > 0 && (
+                <div className="mb-12 lg:hidden">
+                  <details className="group edit-bg-muted p-4">
+                    <summary className="cursor-pointer list-none flex items-center justify-between edit-byline hover:text-foreground transition-colors">
+                      <span>INDEX</span>
+                      <span className="transform group-open:rotate-180 transition-transform">↓</span>
+                    </summary>
+                    <div className="mt-4 pl-4 edit-divider-vertical">
+                      <TableOfContents items={tocItems} />
+                    </div>
+                  </details>
+                </div>
+              )}
+
+              {/* Content */}
+              <div className="edit-content prose max-w-none">
+                <MDXContent code={post.content} />
+              </div>
+
+              {/* Article footer */}
+              <footer className="mt-16 edit-divider-top pt-8">
+                <div className="edit-byline mb-4">END OF ARTICLE</div>
+                <div className="flex justify-between items-center">
+                  <Link
+                    href="/blogs"
+                    className="edit-meta hover:text-foreground transition-colors inline-flex items-center gap-2"
+                  >
+                    <ArrowLeft className="h-4 w-4" />
+                    <span>記事一覧に戻る</span>
+                  </Link>
+                  <div className="edit-meta">
+                    <span className="edit-line" />
+                    <span className="mx-2">SHARE</span>
+                    <span className="edit-line" />
+                  </div>
+                </div>
+              </footer>
+            </div>
+
+            {/* Desktop sidebar TOC */}
+            {tocItems.length > 0 && (
+              <aside className="hidden lg:block">
+                <div className="sticky top-8">
+                  <div className="edit-byline mb-4">INDEX</div>
+                  <div className="edit-divider-vertical pl-4">
+                    <TableOfContents items={tocItems} />
+                  </div>
+                </div>
+              </aside>
+            )}
+          </div>
+        </EditContainer>
+
+        {/* Related articles */}
+        {relatedPosts.length > 0 && (
+          <section className="edit-divider-top mt-16 pt-16">
+            <EditContainer>
+              <div className="edit-byline mb-4">RELATED ARTICLES</div>
+              <h2 className="text-2xl font-bold mb-8">あわせて読みたい</h2>
+              <div className="edit-grid-3 gap-6">
+                {relatedPosts.map((relatedPost, index) => (
+                  <EditCard
+                    key={relatedPost.slug}
+                    variant="default"
+                    size="lg"
+                    className={`${
+                      index === 0
+                        ? "edit-bg-pastel-peach"
+                        : index === 1
+                          ? "edit-bg-pastel-mint"
+                          : "edit-bg-pastel-lavender"
+                    }`}
+                  >
+                    <div className="mb-3 flex flex-wrap gap-1">
+                      {relatedPost.tags.slice(0, 2).map((tag) => (
+                        <EditTag
+                          key={tag}
+                          href={`/tags/${tag}`}
+                          variant={index === 0 ? "pastel-pink" : index === 1 ? "pastel-mint" : "pastel-lavender"}
+                          size="sm"
+                        >
+                          {tag}
+                        </EditTag>
+                      ))}
+                    </div>
+                    <h3 className="mb-2 text-base font-semibold leading-tight">
+                      <Link
+                        href={`/blogs/${relatedPost.slug}`}
+                        className="hover:underline decoration-1 underline-offset-2"
+                      >
+                        {relatedPost.title}
+                      </Link>
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">
+                      {relatedPost.description}
+                    </p>
+                  </EditCard>
+                ))}
+              </div>
+            </EditContainer>
           </section>
         )}
       </article>

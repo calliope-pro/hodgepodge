@@ -14,14 +14,14 @@ export function MobileMenu({ navigation }: MobileMenuProps) {
     <Disclosure as="nav" className="md:hidden">
       {({ open }) => (
         <>
-          <div className="flex items-center justify-between px-4 py-3">
+          <div className="flex items-center justify-between px-4 py-4 edit-divider-bottom">
             <Link
               href="/"
-              className="text-xl font-bold text-foreground hover:text-accent transition-colors"
+              className="text-lg font-bold text-foreground hover:underline decoration-1 underline-offset-2"
             >
-              Hodgepodge
+              HODGEPODGE
             </Link>
-            <Disclosure.Button className="neu-convex inline-flex items-center justify-center rounded-xl p-3 text-muted-foreground hover:text-foreground focus:outline-none focus:neu-pressed transition-premium">
+            <Disclosure.Button className="inline-flex items-center justify-center p-2 text-foreground hover:bg-muted focus:outline-none transition-colors">
               <span className="sr-only">メニューを開く</span>
               {open ? (
                 <X className="h-6 w-6" aria-hidden="true" />
@@ -34,20 +34,20 @@ export function MobileMenu({ navigation }: MobileMenuProps) {
           <Transition
             as={Fragment}
             enter="duration-200 ease-out"
-            enterFrom="opacity-0 scale-95"
-            enterTo="opacity-100 scale-100"
-            leave="duration-100 ease-in"
-            leaveFrom="opacity-100 scale-100"
-            leaveTo="opacity-0 scale-95"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="duration-150 ease-in"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
           >
-            <Disclosure.Panel className="neu-floating mx-4 mb-4 rounded-xl bg-card shadow-lg ring-1 ring-border">
-              <div className="space-y-1 p-4">
+            <Disclosure.Panel className="edit-divider-bottom">
+              <div className="px-4 py-4 space-y-2">
                 {navigation.map((item) => (
                   <Disclosure.Button
                     key={item.name}
                     as={Link}
                     href={item.href}
-                    className="neu-subtle group flex w-full items-center rounded-lg px-4 py-3 text-base font-medium text-foreground hover:neu-pressed hover:text-accent focus:neu-pressed focus:text-accent focus:outline-none transition-premium"
+                    className="block px-4 py-2 text-sm font-medium text-foreground hover:bg-muted hover:underline decoration-1 underline-offset-2 focus:outline-none transition-colors"
                   >
                     {item.name}
                   </Disclosure.Button>
@@ -61,26 +61,25 @@ export function MobileMenu({ navigation }: MobileMenuProps) {
   )
 }
 
-// デスクトップメニュー用コンポーネント
 interface DesktopMenuProps {
   navigation: Array<{ name: string; href: string }>
 }
 
 export function DesktopMenu({ navigation }: DesktopMenuProps) {
   return (
-    <nav className="hidden md:flex items-center justify-between py-6">
+    <nav className="hidden md:flex items-center justify-between py-6 edit-divider-bottom">
       <Link
         href="/"
-        className="text-2xl font-bold text-foreground hover:text-accent transition-colors"
+        className="text-xl font-bold text-foreground hover:underline decoration-1 underline-offset-2"
       >
-        Hodgepodge
+        HODGEPODGE
       </Link>
-      <div className="flex items-center space-x-8">
+      <div className="flex items-center gap-8">
         {navigation.map((item) => (
           <Link
             key={item.name}
             href={item.href}
-            className="neu-convex px-6 py-3 rounded-xl font-medium text-foreground hover:text-accent hover:neu-pressed focus:neu-pressed focus:outline-none transition-premium"
+            className="text-sm font-medium text-foreground hover:underline decoration-1 underline-offset-2 focus:outline-none transition-colors"
           >
             {item.name}
           </Link>
