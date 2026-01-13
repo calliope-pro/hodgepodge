@@ -37,7 +37,7 @@ export default function Home() {
             <div className="md:border-l md:border-border pl-0 md:pl-8 mt-8 md:mt-0">
               <div className="edit-byline mb-4">LATEST</div>
               {posts.slice(0, 3).map((post, index) => (
-                <div key={post.slug} className={`mb-6 ${index === 0 ? "edit-bg-pastel-mint p-4 -ml-4" : ""}`}>
+                <div key={post.slug} className={`mb-6 ${index === 0 ? "edit-bg-pastel-mint p-4 ml-0 md:-ml-4" : ""}`}>
                   <div className="edit-meta mb-2">
                     <time dateTime={post.datePublished}>
                       {new Date(post.datePublished).toLocaleDateString("ja-JP")}
